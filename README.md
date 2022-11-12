@@ -6,4 +6,4 @@ team members
 - Henry 
 - Nadvi
 - Thomas
-- Stephano
+- Stephan
