@@ -1,18 +1,24 @@
-from PIL import Image
+from PIL import Image, ImageDraw
 
 WIDTH = 400
 HEIGHT = 600
-
+currentBall = 17
+pocketStatus = [[False,"NaN"],[False,"NaN"],[False,"NaN"],[False,"NaN"],[False,"NaN"],[False,"NaN"]]
+pocketCoord = [(13,5),(384,6),(12,288),(393,287),(6,580),(394,576)]
 def colourReg(frame):
+    global currentBall
     img = Image.open(frame)
-    for x in range(WIDTH):
-        for y in range(HEIGHT):
-            avgCol = img.getpixel(x,y)
-            for xp in range(10):
-                if (x+xp < WIDTH):
-                    for yp in range(10):
-                        if (y+yp < HEIGHT):
-                            temp =img.getpixel(x+xp,y+yp)
-                            avgCol = ((avgCol[0]+temp[0])/2,(avgCol[1]+temp[1])/2,(avgCol[1]+temp[1])/2)
-
-                    
+    ball = 0
+    for i in range(len(pocketCoord)):
+        print(img.getpixel(pocketCoord[i])[0])
+        if pocketStatus[i][0]:
+            if img.getpixel(pocketCoord[i])[0]<150:
+                currentBall -= 1
+                pocketStatus[i] = [False,"NaN"]
+                print("BALL")
+        else:
+            if img.getpixel(pocketCoord[i])[0]>150:
+                pocketStatus[i] = [True,"Colour"]
+                print("CLOSE")
+    print(currentBall)
+colourReg("pics/pool001410.warped.jpg")
