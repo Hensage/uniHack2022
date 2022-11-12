@@ -5,9 +5,9 @@ from skimage import transform
 from skimage.io import imread, imshow
 from skimage import data, io, filters
 
-table = io.imread('pool001425.jpg')
+def warp_to_table(frame):
 
-def warp_to_table(img):
+    img = io.imread(frame);
 
     points_of_interest =[[810, 295], 
                         [950, 620], 
@@ -22,7 +22,5 @@ def warp_to_table(img):
 
     tform = transform.estimate_transform('projective', points_of_interest, projection)
     warped_image = (transform.warp(img, tform.inverse, mode = 'symmetric'))[0:600,0:400]
+    io.imsave(frame[0:-3] + "warped.jpg", warped_image)
     return warped_image
-
-warp_to_table(table)
-io.show()
